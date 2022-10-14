@@ -5,7 +5,18 @@ from datetime import datetime, date
 from zhdate import ZhDate
 import sys
 import os
+import http.client, urllib
+import json
 
+def lizhi():
+    conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
+    params = urllib.parse.urlencode({'key':'6c831b76069a5d03d820f9f89a482639'})
+    headers = {'Content-type':'application/x-www-form-urlencoded'}
+    conn.request('POST','/lzmy/index',params,headers)
+    res = conn.getresponse()
+    data = res.read()
+    data = json.loads(data)
+    return data["newslist"][0]["saying"]
 
 def get_color():
     # 获取随机颜色
@@ -159,7 +170,7 @@ def get_ciba():
     return note_ch, note_en
 
 
-def send_message(to_user, access_token, region_name, weather, temp, wind_dir, note_ch, note_en, max_temp, min_temp,
+def send_message(to_user, access_token, region_name, weather, temp, wind_dir, note_ch, note_en, lizhi, max_temp, min_temp,
                  sunrise, sunset, category, pm2p5, proposal, chp):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
@@ -240,6 +251,10 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
             },
             "pm2p5": {
                 "value": pm2p5,
+                "color": get_color()
+            },
+            "lizhi": {
+                "value": lizhi,
                 "color": get_color()
             },
             "proposal": {
