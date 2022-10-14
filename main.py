@@ -8,7 +8,7 @@ import os
 import http.client, urllib
 import json
 
-def lizhi():
+def zaoan():
     conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
     params = urllib.parse.urlencode({'key':'6c831b76069a5d03d820f9f89a482639'})
     headers = {'Content-type':'application/x-www-form-urlencoded'}
@@ -170,7 +170,7 @@ def get_ciba():
     return note_ch, note_en
 
 
-def send_message(to_user, access_token, region_name, weather, temp, wind_dir, note_ch, note_en, lizhi, max_temp, min_temp,
+def send_message(to_user, access_token, region_name, weather, temp, wind_dir, note_ch, note_en, zaoan, max_temp, min_temp,
                  sunrise, sunset, category, pm2p5, proposal, chp):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
@@ -199,6 +199,10 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
         "data": {
             "date": {
                 "value": "{} {}".format(today, week),
+                "color": get_color()
+            },
+            "zaoan": {
+                "value": zaoan,
                 "color": get_color()
             },
             "region": {
@@ -251,10 +255,6 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
             },
             "pm2p5": {
                 "value": pm2p5,
-                "color": get_color()
-            },
-            "lizhi": {
-                "value": lizhi,
                 "color": get_color()
             },
             "proposal": {
@@ -312,6 +312,8 @@ if __name__ == "__main__":
     accessToken = get_access_token()
     # 接收的用户
     users = config["user"]
+    # 早安心语
+    zaoan=zaoan()
     # 传入地区获取天气信息
     region = config["region"]
     weather, temp, max_temp, min_temp, wind_dir, sunrise, sunset, category, pm2p5, proposal = get_weather(region)
@@ -321,10 +323,8 @@ if __name__ == "__main__":
         # 获取词霸每日金句
         note_ch, note_en = get_ciba()
     chp = get_tianhang()
-    # 早安心语
-    lizhi=lizhi()
     # 公众号推送消息
     for user in users:
-        send_message(user, lizhi, accessToken, region, weather, temp, wind_dir, note_ch, note_en, max_temp, min_temp, sunrise,
+        send_message(user, zaoan, accessToken, region, weather, temp, wind_dir, note_ch, note_en, max_temp, min_temp, sunrise,
                      sunset, category, pm2p5, proposal, chp)
     os.system("pause")
