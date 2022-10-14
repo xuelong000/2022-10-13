@@ -12,7 +12,7 @@ def lizhi():
     conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
     params = urllib.parse.urlencode({'key':'6c831b76069a5d03d820f9f89a482639'})
     headers = {'Content-type':'application/x-www-form-urlencoded'}
-    conn.request('POST','/lzmy/index',params,headers)
+    conn.request('POST','/zaoan/index',params,headers)
     res = conn.getresponse()
     data = res.read()
     data = json.loads(data)
