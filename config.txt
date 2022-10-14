@@ -10,8 +10,6 @@
 "user": ["oigLI5mojPIZUaejt6482a8iQ7mE"],
 
 # 信息配置
-# 早安心语
-"lizhi":"",
 # 和风天气apikey
 "weather_key":"98add21fee1843038e152fe6ab1b09e7",
 # 天行数据apikey
@@ -24,6 +22,8 @@
 "birthday2":{"name": "你老公", "birthday": "r1983-11-04"},
 # 在一起的日子，格式同上
 "love_date":"2011-06-01",
+# 早安心语
+"lizhi":"",
 # 金句中文，如果为空，默认会读取金山的每日金句
 "note_ch":"",
 # 金句英文
