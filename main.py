@@ -16,7 +16,7 @@ def zaoan():
     res = conn.getresponse()
     data = res.read()
     data = json.loads(data)
-    return data["newslist"][0]["saying"]
+    return data["newslist"][0]["content"]
 
 def get_color():
     # 获取随机颜色
