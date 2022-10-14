@@ -312,8 +312,6 @@ if __name__ == "__main__":
     accessToken = get_access_token()
     # 接收的用户
     users = config["user"]
-    # 早安心语
-    zaoan=zaoan()
     # 传入地区获取天气信息
     region = config["region"]
     weather, temp, max_temp, min_temp, wind_dir, sunrise, sunset, category, pm2p5, proposal = get_weather(region)
@@ -323,6 +321,8 @@ if __name__ == "__main__":
         # 获取词霸每日金句
         note_ch, note_en = get_ciba()
     chp = get_tianhang()
+    # 早安心语
+    zaoan=zaoan()
     # 公众号推送消息
     for user in users:
         send_message(user, zaoan, accessToken, region, weather, temp, wind_dir, note_ch, note_en, max_temp, min_temp, sunrise,
